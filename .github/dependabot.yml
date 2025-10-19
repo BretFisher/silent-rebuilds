@@ -11,6 +11,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    commit-message:
+      # Prefix all commit messages with "[actions] "
+      prefix: "[actions] "
 
   # Add this section for each directory with a Dockerfile, K8s manifest, or Helm chart
   # They must use a semver tag, and Dependabot must be able to access the registry
@@ -19,7 +22,7 @@ updates:
   # follow along on a feature request to support multiple directories in one package-ecosystem
   # https://github.com/dependabot/dependabot-core/issues/2178
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/Dockerfiles"
     schedule:
       interval: "weekly"
     commit-message:
