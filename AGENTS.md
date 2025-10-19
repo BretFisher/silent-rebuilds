@@ -14,6 +14,7 @@ This repository evaluates automated container image update tooling. Key files:
 ## Coding Style & Naming Conventions
 - Use two-space indentation for YAML and keep job/step ids lowercase with hyphens (`pin-digest`, `update-summary`).
 - Declare explicit `permissions` in every workflow; start from read-only (`contents: read`) and elevate only what a job requires (e.g., add `pull-requests: write` before automations that open PRs).
+- Pin every `uses:` reference to a commit SHA and append a comment with the source tag (`# v4.1.7`) so Dependabot can detect updates.
 - Prefer descriptive workflow names that surface the tool and scope (`Dependabot Digest Watch`, `Renovate Registry Sweep`).
 - Shell snippets in workflows should be POSIX-compatible and start with `set -euo pipefail` to catch silent failures.
 
@@ -29,3 +30,4 @@ This repository evaluates automated container image update tooling. Key files:
 ## Security & Configuration Tips
 - Never commit real credentials or tokens; rely on repository or organization secrets and document any new secret name in the PR description.
 - When referencing external registries, prefer official image digests and cite the source in comments to aid future audits.
+- Dependabot monitors GitHub Actions via `.github/dependabot.yml`; keep that file updated so pinned SHAs receive upgrade PRs.
