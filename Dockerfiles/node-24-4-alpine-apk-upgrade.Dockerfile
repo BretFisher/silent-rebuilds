@@ -1,4 +1,4 @@
-FROM node:24.4-alpine
+FROM node:24.10-alpine
 
 RUN apk update && \
 	apk upgrade --no-cache

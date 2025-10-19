@@ -1,4 +1,4 @@
-FROM node:24.4
+FROM node:24.10
 
 RUN apt-get update && \
 	apt-get dist-upgrade -y && \
