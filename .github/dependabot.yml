@@ -28,3 +28,6 @@ updates:
     commit-message:
       # Prefix all commit messages with "[docker] "
       prefix: "[docker] "
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
