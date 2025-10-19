@@ -1,0 +1,23 @@
+name: Digestabot Dockerfiles
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 4 * * *"
+
+jobs:
+  digestabot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Digestabot
+        uses: chainguard-dev/digestabot@43222237fd8a07dc41a06ca13e931c95ce2cedac
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          include-files: Dockerfile,Dockerfiles/*.Dockerfile
+          branch-for-pr: digestabot/dockerfile-digests
+          labels-for-pr: automated pr,digestabot,docker

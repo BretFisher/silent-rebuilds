@@ -1,0 +1,44 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "enabledManagers": [
+    "dockerfile"
+  ],
+  "platform": "github",
+  "repositories": [
+    "bretfisher/silent-rebuilds"
+  ],
+  "onboarding": false,
+  "pinDigests": true,
+  "prHourlyLimit": 0,
+  "dockerfile": {
+    "fileMatch": [
+      "(^|/)Dockerfile$",
+      "Dockerfiles/.*\\.Dockerfile$"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchPaths": [
+        "Dockerfiles/**"
+      ],
+      "addLabels": [
+        "renovate",
+        "docker"
+      ],
+      "separateMajorMinor": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "automerge": false
+    }
+  ]
+}
