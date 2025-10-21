@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      max-width: 1300px;
+      max-width: 1400px;
       margin: 40px auto;
       padding: 20px;
       background: #f6f8fa;
@@ -102,12 +102,13 @@
     }
     /* Column widths */
     th:nth-child(1), td:nth-child(1) { width: 10%; }
-    th:nth-child(2), td:nth-child(2) { width: 16%; }
-    th:nth-child(3), td:nth-child(3) { width: 12%; }
-    th:nth-child(4), td:nth-child(4) { width: 10%; }
+    th:nth-child(2), td:nth-child(2) { width: 15%; }
+    th:nth-child(3), td:nth-child(3) { width: 10%; }
+    th:nth-child(4), td:nth-child(4) { width: 9%; }
     th:nth-child(5), td:nth-child(5) { width: 10%; }
     th:nth-child(6), td:nth-child(6) { width: 7%; }
-    th:nth-child(7), td:nth-child(7) { width: 16%; }
+    th:nth-child(7), td:nth-child(7) { width: 15%; }
+    th:nth-child(8), td:nth-child(8) { width: 10%; }
   </style>
 </head>
 <body>
@@ -118,7 +119,7 @@
       <tr>
         <th colspan="3" class="vendor-header">Upstream</th>
         <th rowspan="2" class="date-header">Date</th>
-        <th colspan="3" class="vendor-header">Chainguard</th>
+        <th colspan="4" class="vendor-header">Chainguard</th>
       </tr>
       <tr>
         <th>Tag</th>
@@ -127,6 +128,7 @@
         <th>Tag</th>
         <th>Epoch</th>
         <th>Digest</th>
+        <th>CVEs</th>
       </tr>
     </thead>
     <tbody>
@@ -138,6 +140,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">a6e36ed12001</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -147,6 +150,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r1</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">22d29c5a766f</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -156,6 +160,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r1</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">396fe66558ff</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
@@ -165,6 +170,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r1</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">1e0296068932</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -174,12 +180,14 @@
         <td><span class="tag" style="background:#fff4e6;color:#bc5400">24.0.1</span></td>
         <td><span class="epoch" style="background:#fff4e6;color:#bc5400;border-color:#bc5400">r0</span></td>
         <td><span class="digest" style="background:#fff4e6;color:#bc5400">985b2a214e34</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff4e6;color:#bc5400">24.0.1</span></td>
         <td><span class="digest" style="background:#fff4e6;color:#bc5400">c26190f250a5</span></td>
         <td><span class="cve-badge cve-c">40</span><span class="cve-badge cve-h">151</span><span class="cve-badge cve-m">170</span><span class="cve-badge cve-l">102</span></td>
         <td class="date-cell">2025-05-09</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -192,6 +200,7 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr>
         <td></td>
@@ -201,6 +210,7 @@
         <td><span class="tag" style="background:#fff8c5;color:#735c0f">24.0.2</span></td>
         <td><span class="epoch" style="background:#fff8c5;color:#735c0f;border-color:#735c0f">r0</span></td>
         <td><span class="digest" style="background:#fff8c5;color:#735c0f">d9b2aa875cf7</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -210,6 +220,7 @@
         <td><span class="tag" style="background:#fff8c5;color:#735c0f">24.0.2</span></td>
         <td><span class="epoch" style="background:#fff8c5;color:#735c0f;border-color:#735c0f">r0</span></td>
         <td><span class="digest" style="background:#fff8c5;color:#735c0f">6bf1be683f95</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -219,6 +230,7 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">2702936c98e7</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff8c5;color:#735c0f">24.0.2</span></td>
@@ -228,12 +240,14 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">c05aa38d194d</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff8c5;color:#735c0f">24.0.2</span></td>
         <td><span class="digest" style="background:#fff8c5;color:#735c0f">85150f7c8d9c</span></td>
         <td><span class="cve-badge cve-c">40</span><span class="cve-badge cve-h">150</span><span class="cve-badge cve-m">148</span><span class="cve-badge cve-l">77</span></td>
         <td class="date-cell">2025-05-25</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -246,6 +260,7 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">4e71eaca24b0</span></td>
+        <td><span class="cve-badge cve-m">2</span><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -255,6 +270,7 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">0c6f476c370c</span></td>
+        <td><span class="cve-badge cve-m">2</span><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -264,6 +280,7 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">36b05d7d8a0f</span></td>
+        <td><span class="cve-badge cve-m">2</span><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
@@ -273,6 +290,7 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">482f8ed079d2</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -282,6 +300,7 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">a40137932050</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -291,12 +310,14 @@
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">9e7bbcec0e76</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">c332080545f1</span></td>
         <td><span class="cve-badge cve-c">40</span><span class="cve-badge cve-h">150</span><span class="cve-badge cve-m">148</span><span class="cve-badge cve-l">77</span></td>
         <td class="date-cell">2025-06-09</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -309,12 +330,14 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#ddf4ff;color:#0969da">24.2.0</span></td>
         <td><span class="digest" style="background:#ddf4ff;color:#0969da">16d3d3862d74</span></td>
         <td><span class="cve-badge cve-c">40</span><span class="cve-badge cve-h">150</span><span class="cve-badge cve-m">148</span><span class="cve-badge cve-l">77</span></td>
         <td class="date-cell"></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -327,6 +350,7 @@
         <td><span class="tag" style="background:#ddf4ff;color:#0969da">24.2.0</span></td>
         <td><span class="epoch" style="background:#ddf4ff;color:#0969da;border-color:#0969da">r0</span></td>
         <td><span class="digest" style="background:#ddf4ff;color:#0969da">a9529c4b47c2</span></td>
+        <td><span class="cve-badge cve-l">3</span></td>
       </tr>
       <tr>
         <td></td>
@@ -336,12 +360,14 @@
         <td><span class="tag" style="background:#ddf4ff;color:#0969da">24.2.0</span></td>
         <td><span class="epoch" style="background:#ddf4ff;color:#0969da;border-color:#0969da">r0</span></td>
         <td><span class="digest" style="background:#ddf4ff;color:#0969da">45826066063b</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#ddf4ff;color:#0969da">24.2.0</span></td>
         <td><span class="digest" style="background:#ddf4ff;color:#0969da">d1db2ecd11f4</span></td>
         <td><span class="cve-badge cve-c">40</span><span class="cve-badge cve-h">150</span><span class="cve-badge cve-m">146</span><span class="cve-badge cve-l">77</span></td>
         <td class="date-cell">2025-06-23</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -354,6 +380,7 @@
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">de4b5d4a2121</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -363,12 +390,14 @@
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">bdeea391b21e</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">4b383ce285ed</span></td>
         <td><span class="cve-badge cve-c">40</span><span class="cve-badge cve-h">150</span><span class="cve-badge cve-m">146</span><span class="cve-badge cve-l">76</span></td>
         <td class="date-cell">2025-07-01</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -381,6 +410,7 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr>
         <td></td>
@@ -390,12 +420,14 @@
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">71dc978e9308</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">8369522c586f</span></td>
         <td><span class="cve-badge cve-c">38</span><span class="cve-badge cve-h">133</span><span class="cve-badge cve-m">142</span><span class="cve-badge cve-l">71</span></td>
         <td class="date-cell">2025-07-06</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -408,6 +440,7 @@
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">076baca05359</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -417,6 +450,7 @@
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
         <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">d440811b5fd6</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -426,6 +460,7 @@
         <td><span class="tag" style="background:#ffe8e0;color:#a0360f">24.4.0</span></td>
         <td><span class="epoch" style="background:#ffe8e0;color:#a0360f;border-color:#a0360f">r0</span></td>
         <td><span class="digest" style="background:#ffe8e0;color:#a0360f">e62f5cf8d0d7</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#ffe8e0;color:#a0360f">24.4.0</span></td>
@@ -435,6 +470,7 @@
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r0</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">c819b4e201c1</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -444,6 +480,7 @@
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r0</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">0e1e064f27e0</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
@@ -453,12 +490,14 @@
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r0</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">1b0aa4b4ca4c</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">9b2491ed2930</span></td>
         <td><span class="cve-badge cve-c">38</span><span class="cve-badge cve-h">127</span><span class="cve-badge cve-m">140</span><span class="cve-badge cve-l">71</span></td>
         <td class="date-cell">2025-07-24</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -471,6 +510,7 @@
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r1</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">572ea8e540c0</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -480,6 +520,7 @@
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r1</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">4eaac2e4f8c8</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -489,6 +530,7 @@
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
         <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r2</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">a9ff01832373</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
@@ -498,6 +540,7 @@
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
         <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">c1accc3ce2c8</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -507,6 +550,7 @@
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
         <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">aef6875c2547</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -516,6 +560,7 @@
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
         <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">b0797e91b2a0</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -525,12 +570,14 @@
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
         <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">e0ae821fa25b</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">71f5f2de0f2d</span></td>
         <td><span class="cve-badge cve-c">38</span><span class="cve-badge cve-h">127</span><span class="cve-badge cve-m">140</span><span class="cve-badge cve-l">71</span></td>
         <td class="date-cell">2025-08-12</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -543,12 +590,14 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">dd5c5e4d0a67</span></td>
         <td><span class="cve-badge cve-c">38</span><span class="cve-badge cve-h">127</span><span class="cve-badge cve-m">140</span><span class="cve-badge cve-l">71</span></td>
         <td class="date-cell"></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -561,6 +610,7 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr>
         <td></td>
@@ -570,6 +620,7 @@
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
         <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">a9b82a3e055b</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -579,6 +630,7 @@
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
         <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">8eff45de556a</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -588,6 +640,7 @@
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
         <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">fd0eb23af8be</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -597,6 +650,7 @@
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
         <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">20b6bc5214e7</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
@@ -606,6 +660,7 @@
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
         <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">9ed80d97ec3f</span></td>
+        <td><span class="cve-badge cve-l">2</span></td>
       </tr>
       <tr>
         <td></td>
@@ -615,6 +670,7 @@
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
         <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">dab97b7c6103</span></td>
+        <td><span class="cve-badge cve-l">1</span></td>
       </tr>
       <tr>
         <td></td>
@@ -624,6 +680,7 @@
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
         <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">1462cc1c2c31</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -633,12 +690,14 @@
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
         <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">01489e5d328b</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">701c8a634cb3</span></td>
         <td><span class="cve-badge cve-c">38</span><span class="cve-badge cve-h">127</span><span class="cve-badge cve-m">140</span><span class="cve-badge cve-l">71</span></td>
         <td class="date-cell">2025-09-08</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -651,12 +710,14 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">12affdc04648</span></td>
         <td><span class="cve-badge cve-c">32</span><span class="cve-badge cve-h">107</span><span class="cve-badge cve-m">85</span><span class="cve-badge cve-l">62</span></td>
         <td class="date-cell">2025-09-09</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -669,6 +730,7 @@
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
         <td><span class="epoch" style="background:#f8d7da;color:#721c24;border-color:#721c24">r0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">9d834cab5779</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -678,6 +740,7 @@
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
         <td><span class="epoch" style="background:#f8d7da;color:#721c24;border-color:#721c24">r0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">300e0f531cb2</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -687,12 +750,14 @@
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
         <td><span class="epoch" style="background:#f8d7da;color:#721c24;border-color:#721c24">r0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">771bb70d9d3b</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">82a1d74c5988</span></td>
         <td><span class="cve-badge cve-c">32</span><span class="cve-badge cve-h">107</span><span class="cve-badge cve-m">85</span><span class="cve-badge cve-l">62</span></td>
         <td class="date-cell">2025-09-26</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -705,6 +770,7 @@
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
         <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">863a0afed708</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
@@ -714,6 +780,7 @@
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
         <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">4687f4eb97e9</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -723,6 +790,7 @@
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
         <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">272e1bca55e0</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
@@ -732,6 +800,7 @@
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
         <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">55c2d52e5ea0</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -741,6 +810,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">d9490a3e09e6</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
@@ -750,6 +820,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">1b199566ff82</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -759,6 +830,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">58095fbbda56</span></td>
+        <td>-</td>
       </tr>
       <tr>
         <td></td>
@@ -768,6 +840,7 @@
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
         <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">cddd8e9ebd85</span></td>
+        <td>-</td>
       </tr>
     </tbody>
   </table>
