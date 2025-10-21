@@ -36,7 +36,6 @@
 			"addLabels": [
 				"renovate",
 				"dependencies",
-				"github_actions",
 				"docker"
 			],
 			// Keep major bumps in their own PRs for easier review.
