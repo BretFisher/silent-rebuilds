@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      max-width: 1500px;
+      max-width: 1200px;
       margin: 40px auto;
       padding: 20px;
       background: #f6f8fa;
@@ -32,25 +32,27 @@
     th {
       background: #0969da;
       color: white;
-      padding: 12px 8px;
-      text-align: left;
+      padding: 6px 4px;
+      text-align: center;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
     }
     th.vendor-header {
       background: #0969da;
       text-align: center;
-      font-size: 16px;
-      padding: 16px 8px;
+      font-size: 14px;
+      padding: 8px 4px;
     }
     th.date-header {
       background: #6639ba;
       text-align: center;
+      padding: 8px 4px;
     }
     td {
-      padding: 10px 8px;
+      padding: 6px 4px;
       border-bottom: 1px solid #d0d7de;
-      font-size: 13px;
+      font-size: 12px;
+      text-align: center;
     }
     td.date-cell {
       font-weight: 600;
@@ -61,29 +63,34 @@
       border-right: 2px solid #d0d7de;
     }
     .tag, .digest, .epoch {
-      padding: 4px 8px;
-      border-radius: 4px;
+      padding: 3px 6px;
+      border-radius: 3px;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       display: inline-block;
     }
     .tag {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
     }
     .epoch {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      background: #f6f8fa;
-      color: #57606a;
-      border: 1px solid #d0d7de;
+      border: 1px solid;
     }
     .digest {
-      font-size: 11px;
+      font-size: 10px;
       opacity: 0.9;
     }
     tr:hover {
       background: #f6f8fa;
     }
+    /* Column widths */
+    th:nth-child(1), td:nth-child(1) { width: 12%; }
+    th:nth-child(2), td:nth-child(2) { width: 18%; }
+    th:nth-child(3), td:nth-child(3) { width: 12%; }
+    th:nth-child(4), td:nth-child(4) { width: 12%; }
+    th:nth-child(5), td:nth-child(5) { width: 8%; }
+    th:nth-child(6), td:nth-child(6) { width: 18%; }
   </style>
 </head>
 <body>
@@ -110,7 +117,7 @@
         <td></td>
         <td class="date-cell">2025-05-07</td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">a6e36ed12001</span></td>
       </tr>
       <tr>
@@ -118,7 +125,7 @@
         <td></td>
         <td class="date-cell"></td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
-        <td><span class="epoch">r1</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r1</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">22d29c5a766f</span></td>
       </tr>
       <tr>
@@ -126,7 +133,7 @@
         <td></td>
         <td class="date-cell"></td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
-        <td><span class="epoch">r1</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r1</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">396fe66558ff</span></td>
       </tr>
       <tr>
@@ -134,7 +141,7 @@
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">34bb77a39088</span></td>
         <td class="date-cell">2025-05-08</td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.0.0</span></td>
-        <td><span class="epoch">r1</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r1</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">1e0296068932</span></td>
       </tr>
       <tr>
@@ -142,7 +149,7 @@
         <td></td>
         <td class="date-cell"></td>
         <td><span class="tag" style="background:#fff4e6;color:#bc5400">24.0.1</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff4e6;color:#bc5400;border-color:#bc5400">r0</span></td>
         <td><span class="digest" style="background:#fff4e6;color:#bc5400">985b2a214e34</span></td>
       </tr>
       <tr>
@@ -166,7 +173,7 @@
         <td></td>
         <td class="date-cell">2025-05-15</td>
         <td><span class="tag" style="background:#fff8c5;color:#735c0f">24.0.2</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff8c5;color:#735c0f;border-color:#735c0f">r0</span></td>
         <td><span class="digest" style="background:#fff8c5;color:#735c0f">d9b2aa875cf7</span></td>
       </tr>
       <tr>
@@ -174,7 +181,7 @@
         <td></td>
         <td class="date-cell">2025-05-20</td>
         <td><span class="tag" style="background:#fff8c5;color:#735c0f">24.0.2</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff8c5;color:#735c0f;border-color:#735c0f">r0</span></td>
         <td><span class="digest" style="background:#fff8c5;color:#735c0f">6bf1be683f95</span></td>
       </tr>
       <tr>
@@ -182,7 +189,7 @@
         <td></td>
         <td class="date-cell">2025-05-21</td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">2702936c98e7</span></td>
       </tr>
       <tr>
@@ -190,7 +197,7 @@
         <td><span class="digest" style="background:#fff8c5;color:#735c0f">37c7b4cd8867</span></td>
         <td class="date-cell">2025-05-22</td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">c05aa38d194d</span></td>
       </tr>
       <tr>
@@ -206,7 +213,7 @@
         <td></td>
         <td class="date-cell">2025-05-27</td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">4e71eaca24b0</span></td>
       </tr>
       <tr>
@@ -214,7 +221,7 @@
         <td></td>
         <td class="date-cell">2025-05-28</td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">0c6f476c370c</span></td>
       </tr>
       <tr>
@@ -222,7 +229,7 @@
         <td></td>
         <td class="date-cell"></td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">36b05d7d8a0f</span></td>
       </tr>
       <tr>
@@ -230,7 +237,7 @@
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">ef0861618e36</span></td>
         <td class="date-cell">2025-05-30</td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">482f8ed079d2</span></td>
       </tr>
       <tr>
@@ -238,7 +245,7 @@
         <td></td>
         <td class="date-cell"></td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">a40137932050</span></td>
       </tr>
       <tr>
@@ -246,7 +253,7 @@
         <td></td>
         <td class="date-cell">2025-06-02</td>
         <td><span class="tag" style="background:#dafbe1;color:#0a6e2c">24.1.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#dafbe1;color:#0a6e2c;border-color:#0a6e2c">r0</span></td>
         <td><span class="digest" style="background:#dafbe1;color:#0a6e2c">9e7bbcec0e76</span></td>
       </tr>
       <tr>
@@ -278,7 +285,7 @@
         <td></td>
         <td class="date-cell">2025-06-12</td>
         <td><span class="tag" style="background:#ddf4ff;color:#0969da">24.2.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ddf4ff;color:#0969da;border-color:#0969da">r0</span></td>
         <td><span class="digest" style="background:#ddf4ff;color:#0969da">a9529c4b47c2</span></td>
       </tr>
       <tr>
@@ -286,7 +293,7 @@
         <td></td>
         <td class="date-cell">2025-06-19</td>
         <td><span class="tag" style="background:#ddf4ff;color:#0969da">24.2.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ddf4ff;color:#0969da;border-color:#0969da">r0</span></td>
         <td><span class="digest" style="background:#ddf4ff;color:#0969da">45826066063b</span></td>
       </tr>
       <tr>
@@ -302,7 +309,7 @@
         <td></td>
         <td class="date-cell">2025-06-26</td>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">de4b5d4a2121</span></td>
       </tr>
       <tr>
@@ -310,7 +317,7 @@
         <td></td>
         <td class="date-cell">2025-06-30</td>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">bdeea391b21e</span></td>
       </tr>
       <tr>
@@ -334,7 +341,7 @@
         <td></td>
         <td class="date-cell">2025-07-03</td>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">71dc978e9308</span></td>
       </tr>
       <tr>
@@ -350,7 +357,7 @@
         <td></td>
         <td class="date-cell">2025-07-08</td>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">076baca05359</span></td>
       </tr>
       <tr>
@@ -358,7 +365,7 @@
         <td></td>
         <td class="date-cell">2025-07-09</td>
         <td><span class="tag" style="background:#f6e7ff;color:#8a28d1">24.3.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f6e7ff;color:#8a28d1;border-color:#8a28d1">r0</span></td>
         <td><span class="digest" style="background:#f6e7ff;color:#8a28d1">d440811b5fd6</span></td>
       </tr>
       <tr>
@@ -366,7 +373,7 @@
         <td></td>
         <td class="date-cell">2025-07-11</td>
         <td><span class="tag" style="background:#ffe8e0;color:#a0360f">24.4.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ffe8e0;color:#a0360f;border-color:#a0360f">r0</span></td>
         <td><span class="digest" style="background:#ffe8e0;color:#a0360f">e62f5cf8d0d7</span></td>
       </tr>
       <tr>
@@ -374,7 +381,7 @@
         <td><span class="digest" style="background:#ffe8e0;color:#a0360f">e7db48bc35ee</span></td>
         <td class="date-cell">2025-07-16</td>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r0</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">c819b4e201c1</span></td>
       </tr>
       <tr>
@@ -382,7 +389,7 @@
         <td></td>
         <td class="date-cell">2025-07-17</td>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r0</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">0e1e064f27e0</span></td>
       </tr>
       <tr>
@@ -390,7 +397,7 @@
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">601f205b7565</span></td>
         <td class="date-cell">2025-07-22</td>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r0</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">1b0aa4b4ca4c</span></td>
       </tr>
       <tr>
@@ -406,7 +413,7 @@
         <td></td>
         <td class="date-cell">2025-07-27</td>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
-        <td><span class="epoch">r1</span></td>
+        <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r1</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">572ea8e540c0</span></td>
       </tr>
       <tr>
@@ -414,7 +421,7 @@
         <td></td>
         <td class="date-cell">2025-07-29</td>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
-        <td><span class="epoch">r1</span></td>
+        <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r1</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">4eaac2e4f8c8</span></td>
       </tr>
       <tr>
@@ -422,7 +429,7 @@
         <td></td>
         <td class="date-cell">2025-07-30</td>
         <td><span class="tag" style="background:#e7f5ff;color:#0550ae">24.4.1</span></td>
-        <td><span class="epoch">r2</span></td>
+        <td><span class="epoch" style="background:#e7f5ff;color:#0550ae;border-color:#0550ae">r2</span></td>
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">a9ff01832373</span></td>
       </tr>
       <tr>
@@ -430,7 +437,7 @@
         <td><span class="digest" style="background:#e7f5ff;color:#0550ae">c7a63f857d6d</span></td>
         <td class="date-cell">2025-08-01</td>
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">c1accc3ce2c8</span></td>
       </tr>
       <tr>
@@ -438,7 +445,7 @@
         <td></td>
         <td class="date-cell">2025-08-05</td>
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">aef6875c2547</span></td>
       </tr>
       <tr>
@@ -446,7 +453,7 @@
         <td></td>
         <td class="date-cell">2025-08-08</td>
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">b0797e91b2a0</span></td>
       </tr>
       <tr>
@@ -454,7 +461,7 @@
         <td></td>
         <td class="date-cell">2025-08-10</td>
         <td><span class="tag" style="background:#fff0f6;color:#b93a86">24.5.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff0f6;color:#b93a86;border-color:#b93a86">r0</span></td>
         <td><span class="digest" style="background:#fff0f6;color:#b93a86">e0ae821fa25b</span></td>
       </tr>
       <tr>
@@ -494,7 +501,7 @@
         <td></td>
         <td class="date-cell">2025-08-15</td>
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">a9b82a3e055b</span></td>
       </tr>
       <tr>
@@ -502,7 +509,7 @@
         <td></td>
         <td class="date-cell">2025-08-21</td>
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">8eff45de556a</span></td>
       </tr>
       <tr>
@@ -510,7 +517,7 @@
         <td></td>
         <td class="date-cell">2025-08-26</td>
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">fd0eb23af8be</span></td>
       </tr>
       <tr>
@@ -518,7 +525,7 @@
         <td></td>
         <td class="date-cell">2025-08-27</td>
         <td><span class="tag" style="background:#e8f5e9;color:#1b5e20">24.6.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#e8f5e9;color:#1b5e20;border-color:#1b5e20">r0</span></td>
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">20b6bc5214e7</span></td>
       </tr>
       <tr>
@@ -526,7 +533,7 @@
         <td><span class="digest" style="background:#e8f5e9;color:#1b5e20">d2b6b5aedb5b</span></td>
         <td class="date-cell">2025-08-28</td>
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">9ed80d97ec3f</span></td>
       </tr>
       <tr>
@@ -534,7 +541,7 @@
         <td></td>
         <td class="date-cell">2025-09-03</td>
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">dab97b7c6103</span></td>
       </tr>
       <tr>
@@ -542,7 +549,7 @@
         <td></td>
         <td class="date-cell">2025-09-04</td>
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">1462cc1c2c31</span></td>
       </tr>
       <tr>
@@ -550,7 +557,7 @@
         <td></td>
         <td class="date-cell">2025-09-06</td>
         <td><span class="tag" style="background:#fff3cd;color:#856404">24.7.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#fff3cd;color:#856404;border-color:#856404">r0</span></td>
         <td><span class="digest" style="background:#fff3cd;color:#856404">01489e5d328b</span></td>
       </tr>
       <tr>
@@ -582,7 +589,7 @@
         <td></td>
         <td class="date-cell">2025-09-11</td>
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f8d7da;color:#721c24;border-color:#721c24">r0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">9d834cab5779</span></td>
       </tr>
       <tr>
@@ -590,7 +597,7 @@
         <td></td>
         <td class="date-cell">2025-09-12</td>
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f8d7da;color:#721c24;border-color:#721c24">r0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">300e0f531cb2</span></td>
       </tr>
       <tr>
@@ -598,7 +605,7 @@
         <td></td>
         <td class="date-cell">2025-09-20</td>
         <td><span class="tag" style="background:#f8d7da;color:#721c24">24.8.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#f8d7da;color:#721c24;border-color:#721c24">r0</span></td>
         <td><span class="digest" style="background:#f8d7da;color:#721c24">771bb70d9d3b</span></td>
       </tr>
       <tr>
@@ -614,7 +621,7 @@
         <td></td>
         <td class="date-cell">2025-09-30</td>
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">863a0afed708</span></td>
       </tr>
       <tr>
@@ -622,7 +629,7 @@
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">a2ed436bacdc</span></td>
         <td class="date-cell">2025-10-01</td>
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">4687f4eb97e9</span></td>
       </tr>
       <tr>
@@ -630,7 +637,7 @@
         <td></td>
         <td class="date-cell">2025-10-02</td>
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">272e1bca55e0</span></td>
       </tr>
       <tr>
@@ -638,7 +645,7 @@
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">4e87fa2c1aa4</span></td>
         <td class="date-cell">2025-10-08</td>
         <td><span class="tag" style="background:#d1ecf1;color:#0c5460">24.9.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#d1ecf1;color:#0c5460;border-color:#0c5460">r0</span></td>
         <td><span class="digest" style="background:#d1ecf1;color:#0c5460">55c2d52e5ea0</span></td>
       </tr>
       <tr>
@@ -646,7 +653,7 @@
         <td></td>
         <td class="date-cell">2025-10-09</td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">d9490a3e09e6</span></td>
       </tr>
       <tr>
@@ -654,7 +661,7 @@
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">377f1c17906e</span></td>
         <td class="date-cell">2025-10-14</td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">1b199566ff82</span></td>
       </tr>
       <tr>
@@ -662,7 +669,7 @@
         <td></td>
         <td class="date-cell">2025-10-16</td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">58095fbbda56</span></td>
       </tr>
       <tr>
@@ -670,7 +677,7 @@
         <td></td>
         <td class="date-cell"></td>
         <td><span class="tag" style="background:#ffeef8;color:#cf0b6f">24.10.0</span></td>
-        <td><span class="epoch">r0</span></td>
+        <td><span class="epoch" style="background:#ffeef8;color:#cf0b6f;border-color:#cf0b6f">r0</span></td>
         <td><span class="digest" style="background:#ffeef8;color:#cf0b6f">cddd8e9ebd85</span></td>
       </tr>
     </tbody>
