@@ -2,7 +2,7 @@
 
 Examples of using [Dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions), [Renovate](https://github.com/marketplace/actions/renovate-bot-github-action), and [Chainguard's Digestabot](https://github.com/chainguard-dev/digestabot) in GitHub Actions for container image updates.
 
-We walkthough this repos examples in a video you can watch by signing up here.
+We walkthrough this repos examples in a video you can watch by [signing up here (free)](https://learn.bretfisher.com/chainguard-event).
 
 ## Goals for this repo's examples of automating image updates
 
