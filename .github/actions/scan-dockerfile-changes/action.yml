@@ -1,0 +1,166 @@
+name: 'Scan Dockerfile Changes for CVE Differences'
+description: 'Detects changed Dockerfiles via git diff and scans old vs new images for CVE comparison'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Detect Changed Dockerfiles and Scan CVEs
+      shell: bash
+      run: |
+        set -euo pipefail
+        
+        echo "# 📊 CVE Comparison Report"
+        echo ""
+        
+        # Check if there are any changes
+        if ! git diff --quiet HEAD; then
+          echo "✅ Changes detected, analyzing..."
+        else
+          echo "ℹ️ No changes detected"
+          exit 0
+        fi
+        
+        # Install grype if needed
+        if ! command -v grype &> /dev/null; then
+          echo "📥 Installing Grype..."
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+        fi
+        
+        # Find all changed Dockerfiles
+        CHANGED_FILES=$(git diff --name-only HEAD | grep -E '(Dockerfile|\.Dockerfile)$' || true)
+        
+        if [ -z "$CHANGED_FILES" ]; then
+          echo "ℹ️ No Dockerfile changes found"
+          exit 0
+        fi
+        
+        echo "📦 Changed Dockerfiles:"
+        echo "$CHANGED_FILES"
+        echo ""
+        
+        # Process each changed Dockerfile
+        echo "$CHANGED_FILES" | while IFS= read -r dockerfile; do
+          if [ -z "$dockerfile" ]; then
+            continue
+          fi
+          
+          echo "---"
+          echo ""
+          echo "## 📦 \`$dockerfile\`"
+          echo ""
+          
+          # Get the diff for this file and extract FROM lines
+          DIFF_OUTPUT=$(git diff HEAD -- "$dockerfile")
+          
+          # Extract old image (lines starting with -)
+          OLD_FROM=$(echo "$DIFF_OUTPUT" | grep "^-FROM " | head -1 | sed 's/^-FROM //' | awk '{print $1}')
+          
+          # Extract new image (lines starting with +)
+          NEW_FROM=$(echo "$DIFF_OUTPUT" | grep "^+FROM " | head -1 | sed 's/^+FROM //' | awk '{print $1}')
+          
+          if [ -z "$OLD_FROM" ] || [ -z "$NEW_FROM" ]; then
+            echo "⚠️ Could not extract image references from diff"
+            continue
+          fi
+          
+          if [ "$OLD_FROM" = "$NEW_FROM" ]; then
+            echo "ℹ️ No FROM line changes"
+            continue
+          fi
+          
+          echo "| Aspect | Details |"
+          echo "|--------|---------|"
+          echo "| **Before** | \`$OLD_FROM\` |"
+          echo "| **After**  | \`$NEW_FROM\` |"
+          echo ""
+          
+          # Pull and scan old image
+          echo "🔍 Scanning old image..."
+          docker pull "$OLD_FROM" >/dev/null 2>&1 || { echo "❌ Failed to pull $OLD_FROM"; continue; }
+          OLD_SCAN=$(grype "$OLD_FROM" -o json -q 2>/dev/null)
+          
+          # Parse old CVE counts
+          OLD_CRITICAL=$(echo "$OLD_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length')
+          OLD_HIGH=$(echo "$OLD_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "High")] | length')
+          OLD_MEDIUM=$(echo "$OLD_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Medium")] | length')
+          OLD_LOW=$(echo "$OLD_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Low")] | length')
+          OLD_NEGLIGIBLE=$(echo "$OLD_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Negligible")] | length')
+          OLD_UNKNOWN=$(echo "$OLD_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Unknown")] | length')
+          OLD_TOTAL=$(echo "$OLD_SCAN" | jq '.matches | length')
+          
+          # Pull and scan new image
+          echo "🔍 Scanning new image..."
+          docker pull "$NEW_FROM" >/dev/null 2>&1 || { echo "❌ Failed to pull $NEW_FROM"; continue; }
+          NEW_SCAN=$(grype "$NEW_FROM" -o json -q 2>/dev/null)
+          
+          # Parse new CVE counts
+          NEW_CRITICAL=$(echo "$NEW_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Critical")] | length')
+          NEW_HIGH=$(echo "$NEW_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "High")] | length')
+          NEW_MEDIUM=$(echo "$NEW_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Medium")] | length')
+          NEW_LOW=$(echo "$NEW_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Low")] | length')
+          NEW_NEGLIGIBLE=$(echo "$NEW_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Negligible")] | length')
+          NEW_UNKNOWN=$(echo "$NEW_SCAN" | jq '[.matches[] | select(.vulnerability.severity == "Unknown")] | length')
+          NEW_TOTAL=$(echo "$NEW_SCAN" | jq '.matches | length')
+          
+          # Calculate differences
+          TOTAL_DIFF=$((NEW_TOTAL - OLD_TOTAL))
+          CRITICAL_DIFF=$((NEW_CRITICAL - OLD_CRITICAL))
+          HIGH_DIFF=$((NEW_HIGH - OLD_HIGH))
+          MEDIUM_DIFF=$((NEW_MEDIUM - OLD_MEDIUM))
+          LOW_DIFF=$((NEW_LOW - OLD_LOW))
+          NEGLIGIBLE_DIFF=$((NEW_NEGLIGIBLE - OLD_NEGLIGIBLE))
+          UNKNOWN_DIFF=$((NEW_UNKNOWN - OLD_UNKNOWN))
+          
+          # Format difference helper
+          format_diff() {
+            local old=$1
+            local new=$2
+            local diff=$3
+            if [ $diff -gt 0 ]; then
+              echo "$old → $new 🔴 (+$diff)"
+            elif [ $diff -lt 0 ]; then
+              echo "$old → $new 🟢 ($diff)"
+            else
+              echo "$old → $new ⚪ (0)"
+            fi
+          }
+          
+          echo "### CVE Counts by Severity"
+          echo ""
+          echo "| Severity | Change |"
+          echo "|----------|--------|"
+          echo "| Critical | $(format_diff $OLD_CRITICAL $NEW_CRITICAL $CRITICAL_DIFF) |"
+          echo "| High     | $(format_diff $OLD_HIGH $NEW_HIGH $HIGH_DIFF) |"
+          echo "| Medium   | $(format_diff $OLD_MEDIUM $NEW_MEDIUM $MEDIUM_DIFF) |"
+          echo "| Low      | $(format_diff $OLD_LOW $NEW_LOW $LOW_DIFF) |"
+          echo "| Negligible | $(format_diff $OLD_NEGLIGIBLE $NEW_NEGLIGIBLE $NEGLIGIBLE_DIFF) |"
+          echo "| Unknown  | $(format_diff $OLD_UNKNOWN $NEW_UNKNOWN $UNKNOWN_DIFF) |"
+          echo "| **Total** | **$(format_diff $OLD_TOTAL $NEW_TOTAL $TOTAL_DIFF)** |"
+          echo ""
+          
+          # Assessment
+          if [ $TOTAL_DIFF -lt 0 ]; then
+            echo "### ✅ Assessment: IMPROVEMENT"
+            echo "Reduces CVE count by $((-TOTAL_DIFF))"
+          elif [ $TOTAL_DIFF -gt 0 ]; then
+            echo "### ⚠️ Assessment: REGRESSION"
+            echo "Increases CVE count by $TOTAL_DIFF"
+          else
+            echo "### ⚪ Assessment: NO CHANGE"
+          fi
+          
+          CRITICAL_HIGH_DIFF=$((CRITICAL_DIFF + HIGH_DIFF))
+          if [ $CRITICAL_HIGH_DIFF -lt 0 ]; then
+            echo ""
+            echo "**🎉 Critical/High CVEs reduced by $((-CRITICAL_HIGH_DIFF))**"
+          elif [ $CRITICAL_HIGH_DIFF -gt 0 ]; then
+            echo ""
+            echo "**⚠️ Critical/High CVEs increased by $CRITICAL_HIGH_DIFF**"
+          fi
+          
+          echo ""
+        done
+        
+        echo "---"
+        echo ""
+        echo "✅ CVE comparison complete"
