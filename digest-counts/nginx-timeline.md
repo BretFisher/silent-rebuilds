@@ -1,4 +1,4 @@
-# Nginx 1.26+ Build Timeline
+# Nginx 1.27+ Mainline Build Timeline
 
 Side-by-side comparison of Upstream Nginx and Chainguard Nginx builds.
 
