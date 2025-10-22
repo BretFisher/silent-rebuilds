@@ -9,20 +9,26 @@ runs:
       run: |
         set -euo pipefail
         
-        echo "# 📊 CVE Comparison Report"
-        echo ""
+        # Function to output to both console and summary
+        output() {
+          echo "$@"
+          echo "$@" >> $GITHUB_STEP_SUMMARY
+        }
+        
+        output "# 📊 CVE Comparison Report"
+        output ""
         
         # Check if there are any changes
         if ! git diff --quiet HEAD; then
-          echo "✅ Changes detected, analyzing..."
+          output "✅ Changes detected, analyzing..."
         else
-          echo "ℹ️ No changes detected"
+          output "ℹ️ No changes detected"
           exit 0
         fi
         
         # Install grype if needed
         if ! command -v grype &> /dev/null; then
-          echo "📥 Installing Grype..."
+          output "📥 Installing Grype..."
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "${GITHUB_WORKSPACE}/bin"
           export PATH="${GITHUB_WORKSPACE}/bin:$PATH"
         fi
@@ -31,53 +37,61 @@ runs:
         CHANGED_FILES=$(git diff --name-only HEAD | grep -E '(Dockerfile|\.Dockerfile)$' || true)
         
         if [ -z "$CHANGED_FILES" ]; then
-          echo "ℹ️ No Dockerfile changes found"
+          output "ℹ️ No Dockerfile changes found"
           exit 0
         fi
         
-        echo "📦 Changed Dockerfiles:"
-        echo "$CHANGED_FILES"
-        echo ""
+        output "📦 Changed Dockerfiles:"
+        output '```'
+        output "$CHANGED_FILES"
+        output '```'
+        output ""
         
-        # Process each changed Dockerfile
-        echo "$CHANGED_FILES" | while IFS= read -r dockerfile; do
-          if [ -z "$dockerfile" ]; then
-            continue
-          fi
+        # Process each Dockerfile
+        while IFS= read -r dockerfile; do
+          [ -z "$dockerfile" ] && continue
           
-          echo "---"
-          echo ""
-          echo "## 📦 \`$dockerfile\`"
-          echo ""
+          output "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          output "🔍 Processing: $dockerfile"
+          output "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          output ""
           
-          # Get the diff for this file and extract FROM lines
+          # Get the diff for this Dockerfile
           DIFF_OUTPUT=$(git diff HEAD -- "$dockerfile")
           
-          # Extract old image (lines starting with -)
-          OLD_FROM=$(echo "$DIFF_OUTPUT" | grep "^-FROM " | head -1 | sed 's/^-FROM //' | awk '{print $1}')
+          if [ -z "$DIFF_OUTPUT" ]; then
+            output "⚠️ No diff content found for $dockerfile"
+            continue
+          fi
           
-          # Extract new image (lines starting with +)
-          NEW_FROM=$(echo "$DIFF_OUTPUT" | grep "^+FROM " | head -1 | sed 's/^+FROM //' | awk '{print $1}')
+          # Extract the old and new FROM lines
+          OLD_FROM=$(echo "$DIFF_OUTPUT" | grep "^-FROM " | head -n1 | sed 's/^-FROM //')
+          NEW_FROM=$(echo "$DIFF_OUTPUT" | grep "^+FROM " | head -n1 | sed 's/^\+FROM //')
           
           if [ -z "$OLD_FROM" ] || [ -z "$NEW_FROM" ]; then
-            echo "⚠️ Could not extract image references from diff"
+            output "⚠️ Could not extract FROM lines from diff for $dockerfile"
             continue
           fi
+          
+          output "🔄 Change detected:"
+          output "  **Old:** \`$OLD_FROM\`"
+          output "  **New:** \`$NEW_FROM\`"
+          output ""
           
           if [ "$OLD_FROM" = "$NEW_FROM" ]; then
-            echo "ℹ️ No FROM line changes"
+            output "ℹ️ No FROM line changes"
             continue
           fi
           
-          echo "| Aspect | Details |"
-          echo "|--------|---------|"
-          echo "| **Before** | \`$OLD_FROM\` |"
-          echo "| **After**  | \`$NEW_FROM\` |"
-          echo ""
+          output "| Aspect | Details |"
+          output "|--------|---------|"
+          output "| **Before** | \`$OLD_FROM\` |"
+          output "| **After**  | \`$NEW_FROM\` |"
+          output ""
           
           # Pull and scan old image
-          echo "🔍 Scanning old image..."
-          docker pull "$OLD_FROM" >/dev/null 2>&1 || { echo "❌ Failed to pull $OLD_FROM"; continue; }
+          output "🔍 Scanning old image..."
+          docker pull "$OLD_FROM" >/dev/null 2>&1 || { output "❌ Failed to pull $OLD_FROM"; continue; }
           OLD_SCAN=$(grype "$OLD_FROM" -o json -q 2>/dev/null)
           
           # Parse old CVE counts
@@ -90,8 +104,8 @@ runs:
           OLD_TOTAL=$(echo "$OLD_SCAN" | jq '.matches | length')
           
           # Pull and scan new image
-          echo "🔍 Scanning new image..."
-          docker pull "$NEW_FROM" >/dev/null 2>&1 || { echo "❌ Failed to pull $NEW_FROM"; continue; }
+          output "🔍 Scanning new image..."
+          docker pull "$NEW_FROM" >/dev/null 2>&1 || { output "❌ Failed to pull $NEW_FROM"; continue; }
           NEW_SCAN=$(grype "$NEW_FROM" -o json -q 2>/dev/null)
           
           # Parse new CVE counts
@@ -126,42 +140,42 @@ runs:
             fi
           }
           
-          echo "### CVE Counts by Severity"
-          echo ""
-          echo "| Severity | Change |"
-          echo "|----------|--------|"
-          echo "| Critical | $(format_diff $OLD_CRITICAL $NEW_CRITICAL $CRITICAL_DIFF) |"
-          echo "| High     | $(format_diff $OLD_HIGH $NEW_HIGH $HIGH_DIFF) |"
-          echo "| Medium   | $(format_diff $OLD_MEDIUM $NEW_MEDIUM $MEDIUM_DIFF) |"
-          echo "| Low      | $(format_diff $OLD_LOW $NEW_LOW $LOW_DIFF) |"
-          echo "| Negligible | $(format_diff $OLD_NEGLIGIBLE $NEW_NEGLIGIBLE $NEGLIGIBLE_DIFF) |"
-          echo "| Unknown  | $(format_diff $OLD_UNKNOWN $NEW_UNKNOWN $UNKNOWN_DIFF) |"
-          echo "| **Total** | **$(format_diff $OLD_TOTAL $NEW_TOTAL $TOTAL_DIFF)** |"
-          echo ""
+          output "### CVE Counts by Severity"
+          output ""
+          output "| Severity | Change |"
+          output "|----------|--------|"
+          output "| Critical | $(format_diff $OLD_CRITICAL $NEW_CRITICAL $CRITICAL_DIFF) |"
+          output "| High     | $(format_diff $OLD_HIGH $NEW_HIGH $HIGH_DIFF) |"
+          output "| Medium   | $(format_diff $OLD_MEDIUM $NEW_MEDIUM $MEDIUM_DIFF) |"
+          output "| Low      | $(format_diff $OLD_LOW $NEW_LOW $LOW_DIFF) |"
+          output "| Negligible | $(format_diff $OLD_NEGLIGIBLE $NEW_NEGLIGIBLE $NEGLIGIBLE_DIFF) |"
+          output "| Unknown  | $(format_diff $OLD_UNKNOWN $NEW_UNKNOWN $UNKNOWN_DIFF) |"
+          output "| **Total** | **$(format_diff $OLD_TOTAL $NEW_TOTAL $TOTAL_DIFF)** |"
+          output ""
           
           # Assessment
           if [ $TOTAL_DIFF -lt 0 ]; then
-            echo "### ✅ Assessment: IMPROVEMENT"
-            echo "Reduces CVE count by $((-TOTAL_DIFF))"
+            output "### ✅ Assessment: IMPROVEMENT"
+            output "Reduces CVE count by $((-TOTAL_DIFF))"
           elif [ $TOTAL_DIFF -gt 0 ]; then
-            echo "### ⚠️ Assessment: REGRESSION"
-            echo "Increases CVE count by $TOTAL_DIFF"
+            output "### ⚠️ Assessment: REGRESSION"
+            output "Increases CVE count by $TOTAL_DIFF"
           else
-            echo "### ⚪ Assessment: NO CHANGE"
+            output "### ⚪ Assessment: NO CHANGE"
           fi
           
           CRITICAL_HIGH_DIFF=$((CRITICAL_DIFF + HIGH_DIFF))
           if [ $CRITICAL_HIGH_DIFF -lt 0 ]; then
-            echo ""
-            echo "**🎉 Critical/High CVEs reduced by $((-CRITICAL_HIGH_DIFF))**"
+            output ""
+            output "**🎉 Critical/High CVEs reduced by $((-CRITICAL_HIGH_DIFF))**"
           elif [ $CRITICAL_HIGH_DIFF -gt 0 ]; then
-            echo ""
-            echo "**⚠️ Critical/High CVEs increased by $CRITICAL_HIGH_DIFF**"
+            output ""
+            output "**⚠️ Critical/High CVEs increased by $CRITICAL_HIGH_DIFF**"
           fi
           
-          echo ""
+          output ""
         done
         
-        echo "---"
-        echo ""
-        echo "✅ CVE comparison complete"
+        output "---"
+        output ""
+        output "✅ CVE comparison complete"
