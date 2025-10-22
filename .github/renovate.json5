@@ -17,10 +17,10 @@
 
 	// Tell Renovate where Dockerfiles live so it scans both root-level and templated copies.
 	"dockerfile": {
-		"fileMatch": [
-			"(^|/)Dockerfile$",
-			"Dockerfiles/.*\\.Dockerfile$"
-		]
+		"managerFilePatterns": [
+             "/(^|/)Dockerfile$/",
+             "/Dockerfiles/.*\\.Dockerfile$/"
+           ]
 	},
 
 	"packageRules": [
