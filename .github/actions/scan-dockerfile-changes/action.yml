@@ -23,7 +23,8 @@ runs:
         # Install grype if needed
         if ! command -v grype &> /dev/null; then
           echo "📥 Installing Grype..."
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "${GITHUB_WORKSPACE}/bin"
+          export PATH="${GITHUB_WORKSPACE}/bin:$PATH"
         fi
         
         # Find all changed Dockerfiles
