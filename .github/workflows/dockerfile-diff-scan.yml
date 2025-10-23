@@ -1,0 +1,30 @@
+name: Dockerfile Diff CVE Scan
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+
+jobs:
+  scan-dockerfile-diff:
+    name: Scan Dockerfile Diff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+
+      - name: Scan Dockerfile changes with Grype
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          ./scripts/scan-dockerfile-diff.sh --base "${BASE_SHA}" --head "${HEAD_SHA}"
