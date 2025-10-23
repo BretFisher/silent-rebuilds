@@ -70,8 +70,14 @@ output() {
   fi
 }
 
+log_cmd() {
+  echo "+ $*" >&2
+}
+
+log_cmd git fetch --no-tags --depth=1 origin "${BASE_REF}"
 git fetch --no-tags --depth=1 origin "${BASE_REF}" >/dev/null 2>&1 || true
 
+log_cmd git diff --name-only --diff-filter=M "${BASE_REF}" "${HEAD_REF}"
 CHANGED_FILES=$(git diff --name-only --diff-filter=M "${BASE_REF}" "${HEAD_REF}" | grep -E '(Dockerfile|\.Dockerfile)$' || true)
 
 output "# 🔍 Dockerfile Diff CVE Scan"
@@ -197,24 +203,27 @@ grype_scan() {
     echo ""
     return
   fi
-  grype "${ref}" -o json --fail-on none -q 2>/dev/null || echo ""
+  log_cmd grype "${ref}" -q -o template -t summary.tmpl
+  grype "${ref}" -q -o template -t summary.tmpl 2>/dev/null || echo ""
 }
 
-severity_counts() {
+summary_value() {
   local payload="${1:-}"
-  if [ -z "${payload}" ]; then
-    echo "0 0 0 0 0 0 0"
+  local key="${2:-}"
+  if [ -z "${payload}" ] || [ -z "${key}" ]; then
+    echo "0"
     return
   fi
-  echo "${payload}" | jq -r '[
-    (.matches // []) | map(select(.vulnerability.severity == "Critical")) | length,
-    (.matches // []) | map(select(.vulnerability.severity == "High")) | length,
-    (.matches // []) | map(select(.vulnerability.severity == "Medium")) | length,
-    (.matches // []) | map(select(.vulnerability.severity == "Low")) | length,
-    (.matches // []) | map(select(.vulnerability.severity == "Negligible")) | length,
-    (.matches // []) | map(select(.vulnerability.severity == "Unknown")) | length,
-    (.matches // []) | length
-  ] | @tsv'
+  local value
+  if ! value=$(printf '%s\n' "${payload}" | jq -r --arg key "${key}" 'try (.[ $key ] // 0) catch 0' 2>/dev/null); then
+    echo "0"
+    return
+  fi
+  if [ -z "${value}" ] || [ "${value}" = "null" ]; then
+    echo "0"
+  else
+    echo "${value}"
+  fi
 }
 
 while IFS= read -r dockerfile; do
@@ -223,12 +232,14 @@ while IFS= read -r dockerfile; do
   output "### ${dockerfile}"
   output ""
 
+  log_cmd git cat-file -e "${BASE_REF}:${dockerfile}"
   if ! git cat-file -e "${BASE_REF}:${dockerfile}" >/dev/null 2>&1; then
     output "ℹ️ ${dockerfile} added in this comparison; skipping baseline scan."
     output ""
     continue
   fi
 
+  log_cmd git diff "${BASE_REF}" "${HEAD_REF}" -- "${dockerfile}"
   mapfile -t old_from_lines < <(git diff "${BASE_REF}" "${HEAD_REF}" -- "${dockerfile}" | sed -n '/^-FROM /s/^-FROM //p')
   mapfile -t new_from_lines < <(git diff "${BASE_REF}" "${HEAD_REF}" -- "${dockerfile}" | sed -n '/^+FROM /s/^+FROM //p')
 
@@ -265,6 +276,7 @@ while IFS= read -r dockerfile; do
     new_ref="$(extract_image_ref "${new_line}")"
 
     if [ -n "${old_ref}" ]; then
+      log_cmd docker pull "${old_ref}"
       if ! docker pull "${old_ref}" >/dev/null 2>&1; then
         output "❌ Failed to pull \`${old_ref}\`"
         old_ref=""
@@ -272,6 +284,7 @@ while IFS= read -r dockerfile; do
     fi
 
     if [ -n "${new_ref}" ]; then
+      log_cmd docker pull "${new_ref}"
       if ! docker pull "${new_ref}" >/dev/null 2>&1; then
         output "❌ Failed to pull \`${new_ref}\`"
         new_ref=""
@@ -287,14 +300,42 @@ while IFS= read -r dockerfile; do
     old_scan="$(grype_scan "${old_ref}")"
     new_scan="$(grype_scan "${new_ref}")"
 
-    read -r OLD_CRITICAL OLD_HIGH OLD_MEDIUM OLD_LOW OLD_NEGLIGIBLE OLD_UNKNOWN OLD_TOTAL <<<"$(severity_counts "${old_scan}")"
-    read -r NEW_CRITICAL NEW_HIGH NEW_MEDIUM NEW_LOW NEW_NEGLIGIBLE NEW_UNKNOWN NEW_TOTAL <<<"$(severity_counts "${new_scan}")"
-
-    if [ "${OLD_TOTAL}" -eq 0 ] && [ "${NEW_TOTAL}" -eq 0 ]; then
-      output "ℹ️ No CVEs detected for either image."
-      output ""
-      continue
+    if [ -n "${SCAN_DEBUG_DIR:-}" ]; then
+      mkdir -p "${SCAN_DEBUG_DIR}"
+      if [ -n "${old_scan}" ]; then
+        printf '%s\n' "${old_scan}" >"${SCAN_DEBUG_DIR}/$(basename "${dockerfile}")_change$((idx + 1))_before.json"
+      fi
+      if [ -n "${new_scan}" ]; then
+        printf '%s\n' "${new_scan}" >"${SCAN_DEBUG_DIR}/$(basename "${dockerfile}")_change$((idx + 1))_after.json"
+      fi
     fi
+
+    OLD_TOTAL="$(summary_value "${old_scan}" "total")"
+    OLD_NEGLIGIBLE="$(summary_value "${old_scan}" "negligible")"
+    OLD_LOW="$(summary_value "${old_scan}" "low")"
+    OLD_MEDIUM="$(summary_value "${old_scan}" "medium")"
+    OLD_HIGH="$(summary_value "${old_scan}" "high")"
+    OLD_CRITICAL="$(summary_value "${old_scan}" "critical")"
+    OLD_UNKNOWN="$(summary_value "${old_scan}" "unknown")"
+
+    NEW_TOTAL="$(summary_value "${new_scan}" "total")"
+    NEW_NEGLIGIBLE="$(summary_value "${new_scan}" "negligible")"
+    NEW_LOW="$(summary_value "${new_scan}" "low")"
+    NEW_MEDIUM="$(summary_value "${new_scan}" "medium")"
+    NEW_HIGH="$(summary_value "${new_scan}" "high")"
+    NEW_CRITICAL="$(summary_value "${new_scan}" "critical")"
+    NEW_UNKNOWN="$(summary_value "${new_scan}" "unknown")"
+
+    if [ -z "${old_scan}" ] && [ -n "${old_ref}" ]; then
+      output "⚠️ No scan results captured for \`${old_ref}\`; grype returned no payload."
+    fi
+    if [ -z "${new_scan}" ] && [ -n "${new_ref}" ]; then
+      output "⚠️ No scan results captured for \`${new_ref}\`; grype returned no payload."
+    fi
+
+    output "- Before totals: Total ${OLD_TOTAL}, Critical ${OLD_CRITICAL}, High ${OLD_HIGH}, Medium ${OLD_MEDIUM}, Low ${OLD_LOW}, Negligible ${OLD_NEGLIGIBLE}, Unknown ${OLD_UNKNOWN}"
+    output "- After totals: Total ${NEW_TOTAL}, Critical ${NEW_CRITICAL}, High ${NEW_HIGH}, Medium ${NEW_MEDIUM}, Low ${NEW_LOW}, Negligible ${NEW_NEGLIGIBLE}, Unknown ${NEW_UNKNOWN}"
+    output ""
 
     output "| Severity | Change |"
     output "|----------|--------|"

@@ -1,0 +1,37 @@
+{{- if not .Matches }}
+{{ printf "{\"total\":0,\"negligible\":0,\"low\":0,\"medium\":0,\"high\":0,\"critical\":0,\"unknown\":0}" }}
+{{- else }}
+    {{- $negligible := 0 }}
+    {{- $low := 0 }}
+    {{- $medium := 0 }}
+    {{- $high := 0 }}
+    {{- $critical := 0 }}
+    {{- $unknown := 0 }}
+    {{- $total := 0 }}
+    {{- $len := 0 }}
+    {{- range .Matches}}
+        {{- if gt (len .Artifact.Name) $len }}
+            {{- $len = len .Artifact.Name }}
+        {{- end }}
+    {{- end }}
+    {{- range .Matches}}
+        {{- if eq .Vulnerability.Severity "Negligible" }}
+            {{- $negligible = add1 $negligible }}
+        {{- else if eq .Vulnerability.Severity "Low"}}
+            {{- $low = add1 $low }}
+        {{- else if eq .Vulnerability.Severity "Medium"}}
+            {{- $medium = add1 $medium }}
+        {{- else if eq .Vulnerability.Severity "High"}}
+            {{- $high = add1 $high }}
+        {{- else if eq .Vulnerability.Severity "Critical"}}
+            {{- $critical = add1 $critical }}
+        {{- else if eq .Vulnerability.Severity "Unknown"}}
+            {{- $unknown = add1 $unknown }}
+        {{- else }}
+            {{ printf "ERROR: Unknown severity level: %s" .Vulnerability.Severity }}
+        {{- end }}
+        {{- $total = add1 $total }}
+    {{- end}}
+
+{{ printf "{\"Total\":%d,\"Negligible\":%d,\"Low\":%d,\"Medium\":%d,\"High\":%d,\"Critical\":%d,\"Unknown\":%d}" $total $negligible $low $medium $high $critical $unknown }}
+{{- end }}
