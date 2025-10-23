@@ -215,7 +215,16 @@ summary_value() {
     return
   fi
   local value
-  if ! value=$(printf '%s\n' "${payload}" | jq -r --arg key "${key}" 'try (.[ $key ] // 0) catch 0' 2>/dev/null); then
+  if ! value=$(printf '%s\n' "${payload}" | jq -r --arg key "${key}" '
+      try (
+        (
+          to_entries[]?
+          | select((.key | ascii_downcase) == ($key | ascii_downcase))
+          | .value
+        ) // 0
+      ) catch 0
+      | (if type == "string" then tonumber? // 0 else . end)
+    ' 2>/dev/null); then
     echo "0"
     return
   fi

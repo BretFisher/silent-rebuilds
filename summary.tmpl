@@ -1,5 +1,5 @@
 {{- if not .Matches }}
-{{ printf "{\"total\":0,\"negligible\":0,\"low\":0,\"medium\":0,\"high\":0,\"critical\":0,\"unknown\":0}" }}
+{{ printf "{\"Total\":0,\"Negligible\":0,\"Low\":0,\"Medium\":0,\"High\":0,\"Critical\":0,\"Unknown\":0}" }}
 {{- else }}
     {{- $negligible := 0 }}
     {{- $low := 0 }}
@@ -28,10 +28,9 @@
         {{- else if eq .Vulnerability.Severity "Unknown"}}
             {{- $unknown = add1 $unknown }}
         {{- else }}
-            {{ printf "ERROR: Unknown severity level: %s" .Vulnerability.Severity }}
+            {{- $unknown = add1 $unknown }}
         {{- end }}
         {{- $total = add1 $total }}
     {{- end}}
-
 {{ printf "{\"Total\":%d,\"Negligible\":%d,\"Low\":%d,\"Medium\":%d,\"High\":%d,\"Critical\":%d,\"Unknown\":%d}" $total $negligible $low $medium $high $critical $unknown }}
 {{- end }}
