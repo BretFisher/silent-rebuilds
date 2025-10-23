@@ -42,7 +42,7 @@ jobs:
 
           git fetch --no-tags --depth=1 origin "${BASE_SHA}" >/dev/null 2>&1 || true
 
-          CHANGED_FILES=$(git diff --name-only "${BASE_SHA}" "${HEAD_SHA}" | grep -E '(Dockerfile|\.Dockerfile)$' || true)
+          CHANGED_FILES=$(git diff --name-only --diff-filter=M "${BASE_SHA}" "${HEAD_SHA}" | grep -E '(Dockerfile|\.Dockerfile)$' || true)
 
           if [ -z "${CHANGED_FILES}" ]; then
             output "ℹ️ No Dockerfile changes detected in this pull request."
@@ -147,7 +147,7 @@ jobs:
               echo ""
               return
             fi
-            grype "$ref" -o json -q 2>/dev/null || echo ""
+            grype "$ref" -o json --fail-on none -q 2>/dev/null || echo ""
           }
 
           severity_counts() {
@@ -171,6 +171,12 @@ jobs:
             [ -n "$dockerfile" ] || continue
             output "### ${dockerfile}"
             output ""
+
+            if ! git cat-file -e "${BASE_SHA}:${dockerfile}" 2>/dev/null; then
+              output "ℹ️ ${dockerfile} added in this pull request; skipping baseline comparison."
+              output ""
+              continue
+            fi
 
             mapfile -t old_from_lines < <(git diff "${BASE_SHA}" "${HEAD_SHA}" -- "$dockerfile" | sed -n '/^-FROM /s/^-FROM //p')
             mapfile -t new_from_lines < <(git diff "${BASE_SHA}" "${HEAD_SHA}" -- "$dockerfile" | sed -n '/^+FROM /s/^+FROM //p')
