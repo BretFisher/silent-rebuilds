@@ -1,1 +1,1 @@
-FROM node:24.0.0
+FROM node:24.11.1@sha256:0c4b1219e836193f8ff099c43a36cb6ebf1bfe4a9a391e9f9eca5b4c96fae5b3
