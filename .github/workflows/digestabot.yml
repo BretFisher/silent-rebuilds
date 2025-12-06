@@ -16,6 +16,6 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: Run Digestabot
-        uses: chainguard-dev/digestabot@43222237fd8a07dc41a06ca13e931c95ce2cedac # v1.2.2
+        uses: chainguard-dev/digestabot@a3b776c1ca57d3127c85578cde8fef6eed3c75d3 # v1.2.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
