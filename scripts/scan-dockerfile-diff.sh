@@ -4,16 +4,19 @@ set -euo pipefail
 
 show_help() {
   cat <<'EOF'
-Usage: scan-dockerfile-diff.sh [--base <sha>] [--head <sha>] [--summary <file>]
+Usage: scan-dockerfile-diff.sh [--base <sha>] [--head <sha>] \\
+                              [--summary <file>] [--template <tmpl-path>]
 
 Scans Dockerfile FROM line changes between two git refs and reports CVE deltas.
-Defaults: --base BASE_SHA env, --head HEAD_SHA env, --summary SUMMARY_FILE env.
+Defaults: --base BASE_SHA env, --head HEAD_SHA env, --summary SUMMARY_FILE env,
+          --template SUMMARY_TEMPLATE env (falls back to ./scripts/summary.tmpl).
 EOF
 }
 
 BASE_REF="${BASE_SHA:-}"
 HEAD_REF="${HEAD_SHA:-}"
 SUMMARY_FILE="${SUMMARY_FILE:-${GITHUB_STEP_SUMMARY:-}}"
+TEMPLATE_PATH="${SUMMARY_TEMPLATE:-./scripts/summary.tmpl}"
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -27,6 +30,10 @@ while [ "$#" -gt 0 ]; do
       ;;
     --summary)
       SUMMARY_FILE="$2"
+      shift 2
+      ;;
+    --template)
+      TEMPLATE_PATH="$2"
       shift 2
       ;;
     -h|--help)
@@ -59,6 +66,11 @@ fi
 
 if [ ! -d .git ]; then
   echo "Error: script must be run inside a git repository." >&2
+  exit 1
+fi
+
+if [ ! -f "${TEMPLATE_PATH}" ]; then
+  echo "Error: summary template '${TEMPLATE_PATH}' not found." >&2
   exit 1
 fi
 
@@ -203,8 +215,8 @@ grype_scan() {
     echo ""
     return
   fi
-  log_cmd grype "${ref}" -q -o template -t summary.tmpl
-  grype "${ref}" -q -o template -t summary.tmpl 2>/dev/null || echo ""
+  log_cmd grype "${ref}" -q -o template -f "${TEMPLATE_PATH}"
+  grype "${ref}" -q -o template -f "${TEMPLATE_PATH}" 2>/dev/null || echo ""
 }
 
 summary_value() {

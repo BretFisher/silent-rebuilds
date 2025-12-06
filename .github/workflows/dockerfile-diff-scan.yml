@@ -1,18 +1,14 @@
-name: Dockerfile Diff CVE Scan
+name: Dockerfile CVE Diff
 
 on:
   pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
 
 permissions:
   contents: read
 
 jobs:
-  scan-dockerfile-diff:
-    name: Scan Dockerfile Diff
+  scan:
+    name: Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

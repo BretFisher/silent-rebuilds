@@ -6,14 +6,14 @@
 
 This repo gives examples of using [GitHub Dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions), [Mend Renovate](https://github.com/marketplace/actions/renovate-bot-github-action), and [Chainguard Digestabot](https://github.com/chainguard-dev/digestabot) in GitHub Actions for container image updates via tag-watching and digest-watching of upstream registries.
 
-Thanks to [Chainguard](https://www.chainguard.dev/) for sponsoring the creation of this repository. I worked with @ericsmalling to walkthrough this repos examples in a video you can get by [signing up here (free)](https://learn.bretfisher.com/chainguard-event).
+Thanks to [Chainguard](https://www.chainguard.dev/) for sponsoring the creation of this repository. I worked with [@ericsmalling](https://github.com/ericsmalling) to walkthrough this repos examples in a video you can get by [signing up here (free)](https://learn.bretfisher.com/chainguard-event).
 
 ## Goals for this repo's examples of automating image updates
 
 - Better understand the edge cases for how upstream registry changes are detected and how tools update image tags and digests.
 - Better understand the side effects of pinning to specific major, minor, patch, and/or digest versions of container images.
 - Find out if we can accidentally miss important updates by pinning to specific tags or digests without properly configured tools.
-- Find out if these tools support the same features/limits for detecting upstream changes and creating PRs for updatingDockerfiles, Compose files, Kubernetes manifests, and Helm charts.
+- Find out if these tools support the same features/limits for detecting upstream changes and creating PRs for updating Dockerfiles, Compose files, Kubernetes manifests, and Helm charts.
 
 ## The upstream base image "Silent Rebuilds" problem
 
