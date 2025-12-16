@@ -1,4 +1,4 @@
-FROM node:24.11@sha256:0c4b1219e836193f8ff099c43a36cb6ebf1bfe4a9a391e9f9eca5b4c96fae5b3
+FROM node:24.11@sha256:9a2ed90cd91b1f3412affe080b62e69b057ba8661d9844e143a6bbd76a23260f
 
 RUN apt-get update && \
 	apt-get dist-upgrade -y && \
