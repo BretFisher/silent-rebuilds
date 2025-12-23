@@ -59,7 +59,7 @@ To balance these goals, this repo recommends the following approach:
 
 3. **Ensure your tooling can detect new digests for the same tag**: Test and verify that your chosen tools can detect when a tag has been silently rebuilt and update the digest accordingly. This is crucial for staying up-to-date with security patches.
 
-4. **Also pin digests for each GitHub Action**: In your GitHub Actions workflows, pin its digest rather than (mutable) tag to ensure you're using a specific, known version of the action. This helps maintain consistency and security in your CI/CD pipeline, and *helps* avoid (but doesn't prevent) some attack vectors in your image build workflows (like the S1ngularity GitHub Actions attack). **Only Dependabot currently supports this via GHA automation.**
+4. **Also pin digests for each GitHub Action**: In your GitHub Actions workflows, pin its digest rather than (mutable) tag to ensure you're using a specific, known version of the action. This helps maintain consistency and security in your CI/CD pipeline, and *helps* avoid (but doesn't prevent) some attack vectors in your image build workflows (like the S1ngularity GitHub Actions attack). 
 
    Example:
    ```yaml
@@ -77,12 +77,11 @@ Each of the three tools has different levels of support for the features needed 
 | Detect new digests for the same tag                    | Yes        | Yes      | Yes        |
 | Create PRs for tag updates                             | Yes        | Yes      | **No**     |
 | Create PRs for digest updates                          | Yes        | Yes      | Yes        | 
-| Update GitHub Actions to pin to digest                 | Yes        | **No**   | No         |
+| Update GitHub Actions to pin to digest                 | Yes        | Yes      | **No**     |
 | Support Dockerfiles                                    | Yes        | Yes      | Yes        |
 | Support Docker Compose files                           | Yes        | Yes      | Yes        |
 | Support Kubernetes manifests                           | Yes        | Yes      | Yes        |
 | Support Helm charts                                    | Yes        | Yes      | Yes        |
 | Supports Chainguard Images (cgr.dev)                   | **No**     | Yes      | Yes        |
 
-- Due to various unsupported features, you'll always need Dependabot for updating GitHub Actions digests. Other tools only support updating the tag (which is mutable).
 - You can get away with all image updates in Dependabot or Renovate, but because Dependabot doesn't support Chainguard's image registry, Renovate is preferred if you use cgr.dev images.
