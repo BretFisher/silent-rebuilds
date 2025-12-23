@@ -3,8 +3,10 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
 	// Reuse Renovate's recommended defaults (sensible scheduling, dependency limits, etc.).
+	// UPDATE: Even better, use "best-practices" which includes "recommended" plus more opinionated settings.
+	// https://docs.renovatebot.com/upgrade-best-practices/
 	"extends": [
-		"config:recommended"
+		"config:best-practices"
 	],
 
 	// Only activate the Dockerfile manager since this repo is focused on container image updates.
