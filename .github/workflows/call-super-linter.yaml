@@ -15,7 +15,7 @@ concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
-# reset permsissions to none at the workflow level
+# reset permissions to none at the workflow level
 # we'll set them at the job level below
 permissions: {}
 
