@@ -5,12 +5,7 @@ on:
   schedule:
     - cron: "0 2 * * *"
 
-permissions:
-  contents: read
-  pull-requests: write
-  issues: write
-  id-token: write
-  security-events: read
+permissions: write-all
 
 jobs:
   renovate:
