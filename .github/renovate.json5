@@ -1,59 +1,59 @@
 {
 	// Link to the official schema so editors can offer autocomplete and validation.
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	$schema: 'https://docs.renovatebot.com/renovate-schema.json',
 
 	// Reuse Renovate's recommended defaults (sensible scheduling, dependency limits, etc.).
 	// UPDATE: Even better, use "best-practices" which includes "recommended" plus more opinionated settings.
 	// https://docs.renovatebot.com/upgrade-best-practices/
-	"extends": [
-		"config:best-practices"
+	extends: [
+		'config:best-practices'
 	],
 
-	// Only activate the Dockerfile manager since this repo is focused on container image updates.
-	"enabledManagers": [
-		"dockerfile"
+	// Only activate the manager since this repo is focused on container image updates.
+	enabledManagers: [
+		'github-actions', 'dockerfile'
 	],
 
 	// Force Renovate to pin every image tag to a digest for reproducible builds.
-	"pinDigests": true,
+	pinDigests: true,
 
 	// Tell Renovate where Dockerfiles live so it scans both root-level and templated copies.
-	"dockerfile": {
-		"managerFilePatterns": [
-             "/(^|/)Dockerfile$/",
-             "/Dockerfiles/.*\\.Dockerfile$/"
-           ]
+	dockerfile: {
+		// managerFilePatterns: [
+		//            '/(^|/)Dockerfile$/',
+		//            '/Dockerfiles/.*\\.Dockerfile$/'
+		//          ]
 	},
 
-	"packageRules": [
+	packageRules: [
 		{
 			// Apply labeling and PR-splitting behavior to every Dockerfile update in the repo.
-			"matchManagers": [
-				"dockerfile"
+			matchManagers: [
+				'dockerfile'
 			],
-			"matchPaths": [
-				"Dockerfiles/**"
+			matchFileNames: [
+				'Dockerfiles/**'
 			],
 			// Auto-label Renovate PRs so they're easy to spot in the teaching repo.
-			"addLabels": [
-				"renovate",
-				"dependencies",
-				"docker"
+			addLabels: [
+				'renovate',
+				'dependencies',
+				'docker'
 			],
 			// Keep major bumps in their own PRs for easier review.
-			"separateMajorMinor": true,
+			separateMajorMinor: true,
 			// Likewise split minor versus patch bumps to illustrate Renovate's granularity.
-			"separateMinorPatch": true
+			separateMinorPatch: true
 		}
 		// {
 		// 	// Disable major updates entirely to keep the focus on patch/minor refreshes.
-		// 	"matchManagers": [
-		// 		"dockerfile"
+		// 	matchManagers: [
+		// 		'dockerfile'
 		// 	],
-		// 	"matchUpdateTypes": [
-		// 		"major"
+		// 	matchUpdateTypes: [
+		// 		'major'
 		// 	],
-		// 	"enabled": false
+		// 	enabled: false
 		// }
 	]
 }
