@@ -1,4 +1,4 @@
-name: Renovate Dockerfiles
+name: Renovate
 
 on:
   workflow_dispatch:
